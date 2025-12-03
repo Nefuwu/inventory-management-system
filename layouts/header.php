@@ -21,7 +21,7 @@
         <a href="dashboard.php" class="<?php echo ($page == 'dashboard') ? 'active' : ''; ?>">
             <i class="bi bi-speedometer2 me-2"></i> Dashboard
         </a>
-        <a href="#" class="<?php echo ($page == 'products') ? 'active' : ''; ?>">
+        <a href="products.php" class="<?php echo ($page == 'products') ? 'active' : ''; ?>">
             <i class="bi bi-box-seam me-2"></i> Products
         </a>
         <a href="categories.php" class="<?php echo ($page == 'categories') ? 'active' : ''; ?>">
