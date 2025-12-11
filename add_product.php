@@ -35,6 +35,11 @@ require_once 'layouts/header.php';
                     </div>
 
                     <div class="row mb-3">
+                        <div class="mb-3">
+                            <label class="form-label">Product Image</label>
+                            <input type="file" name="product_image" class="form-control" accept="image/*">
+                            <div class="form-text">Allowed formats: JPG, PNG, GIF</div>
+                        </div>
                         <div class="col-md-4">
                             <label>Quantity</label>
                             <input type="number" name="quantity" class="form-control" value="0">

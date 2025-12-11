@@ -44,32 +44,49 @@ require_once 'layouts/header.php';
                 $stmt = $pdo->query($sql);
 
                 while ($row = $stmt->fetch()) {
-                    // Logic for Stock Alert Colors
+                    // 1. Logic for Stock Alert Colors
                     $stockClass = '';
-                    if ($row['quantity'] == 0) $stockClass = 'text-danger fw-bold';
-                    elseif ($row['quantity'] <= 10) $stockClass = 'text-warning fw-bold';
+                    if ($row['quantity'] == 0) {
+                        $stockClass = 'text-danger fw-bold';
+                    } elseif ($row['quantity'] <= 10) {
+                        $stockClass = 'text-warning fw-bold';
+                    }
 
-                    // FIX 1: Removed 'media_id' check. We just use a placeholder for now.
-                    $img = "https://via.placeholder.com/50";
-                    
+                    // 2. Logic for Image Display
+                    // Check if database has a filename AND if that file actually exists in the folder
+                    if (!empty($row['image']) && file_exists("uploads/" . $row['image'])) {
+                        $imgSrc = "uploads/" . $row['image'];
+                    } else {
+                        // Fallback if no image uploaded
+                        $imgSrc = "https://via.placeholder.com/50?text=No+Img";
+                    }
+
+                    // 3. Render the Table Row
                     echo "<tr>";
-                    echo "<td><div style='width:50px; height:50px; background:#eee;'></div></td>";
+                    
+                    // Image Column
+                    echo "<td><img src='$imgSrc' width='50' height='50' class='rounded border'></td>";
+                    
+                    // Data Columns
                     echo "<td>{$row['name']}</td>";
                     echo "<td><span class='badge bg-secondary'>{$row['cat_name']}</span></td>";
                     echo "<td class='{$stockClass}'>{$row['quantity']}</td>";
                     echo "<td>\${$row['buy_price']}</td>";
                     echo "<td>\${$row['sale_price']}</td>";
+                    
+                    // Action Buttons
                     echo "<td>
                             <a href='edit_product.php?id={$row['id']}' class='btn btn-sm btn-outline-primary'>
                                 <i class='bi bi-pencil'></i>
                             </a>
                             
                             <a href='actions/delete_product.php?id={$row['id']}' 
-                               class='btn btn-sm btn-outline-danger'
-                               onclick='return confirm(\"Delete this item?\")'>
-                               <i class='bi bi-trash'></i>
+                            class='btn btn-sm btn-outline-danger'
+                            onclick='return confirm(\"Delete this item?\")'>
+                            <i class='bi bi-trash'></i>
                             </a>
-                          </td>";
+                        </td>";
+                        
                     echo "</tr>";
                 }
                 ?>
